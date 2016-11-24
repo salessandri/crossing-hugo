@@ -3,19 +3,19 @@
 
 name = "Crossing Hugo"
 license = "MIT"
-licenselink = "https://github.com/yourname/yourtheme/blob/master/LICENSE.md"
+licenselink = "https://github.com/salessandri/crossing-hugo/blob/master/LICENSE.md"
 description = ""
-homepage = "http://siteforthistheme.com/"
+homepage = "https://github.com/salessandri/crossing-hugo"
 tags = ["", ""]
 features = ["", ""]
 min_version = 0.17
 
 [author]
-  name = ""
+  name = "Santiago Alessandri"
   homepage = ""
 
 # If porting an existing theme
 [original]
-  name = ""
-  homepage = ""
-  repo = ""
+  name = "Crossing Jekyll"
+  homepage = "https://github.com/barepants/crossing-jekyll"
+  repo = "https://github.com/barepants/crossing-jekyll.git"

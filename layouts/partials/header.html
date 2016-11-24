@@ -1,0 +1,75 @@
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <title>{{ if not .IsHome }}{{ htmlEscape .Title }} - {{ end }}{{ htmlEscape .Site.Title }}</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  {{ if $.Params.description }}
+    <meta name="description" property="og:description" content="{{$.Params.description | plainify | htmlEscape }}" />
+  {{ end }}
+
+  <meta property="og:title" content="{{ .Title }}" />
+  <meta property="og:site_name" content="{{ .Site.Title }}" />
+
+  {{ $ogType:="website" }}
+  {{ if .IsPage }}
+    {{ if eq .Type "post" }}
+        {{ $ogType:="article" }}
+    {{ end }}
+  {{ end }}
+
+  <meta property="og:type" content="{{ $ogType }}" />
+
+  {{ $ogImagePrefix := "" }}
+  {{ $ogImage := "" }}
+  {{ if $.Params.image }}
+    {{ $ogImagePrefix := "" }}
+    {{ $ogImage := $.Params.image }}
+    {{ if not (hasPrefix $.Params.image "http") }}
+      {{ $ogImagePrefix := .Site.BaseURL }}
+    {{ end }}
+    <meta property="og:image" content="{{ $ogImagePrefix }}{{ $ogImage }}" />
+  {{ end }}
+
+  <meta property="og:url" content="{{ .Permalink }}" />
+
+  {{ if eq $ogType "article" }}
+
+    <meta property="article:published_time" content="{{ .PublishDate }}" />
+
+    {{ if isset .Site.Params.authors .Params.author }}
+      <meta property="article:author" content="{{ index (index .Site.Params.authors .Params.author) "website" }}">
+    {{ end }}
+
+    {{ range .Params.tags }}
+      <meta property="article:tag" content="{{ htmlEscape . }}" />
+    {{ end }}
+
+  {{ end }}
+
+  {{ if isset .Site.Params.social "twitter"}}
+    <meta name="twitter:site" content="@{{ .Site.Params.social.twitter }}" />
+  {{ end }}
+  <meta name="twitter:card" content="summary{{ if $ogImage }}_large_image{{ end }}" />
+
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,400italic,700&amp;subset=latin,latin-ext" />
+  <link rel="stylesheet" href="{{ .Site.BaseURL }}css/crossing-style.css">
+
+  <link rel="canonical" href="{{ .Permalink }}">
+
+  <link rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" href="{{ .Site.RSSLink }}">
+
+  {{ if .Site.GoogleAnalytics }}
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', '{{ .Site.GoogleAnalytics }}', 'auto');
+      ga('send', 'pageview');
+    </script>
+  {{ end }}
+</head>

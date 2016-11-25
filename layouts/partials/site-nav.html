@@ -14,13 +14,8 @@
 
     <ul class="site-nav-list clearfix">
       {{ range .Site.Menus.main }}
-        {{ $linkUrl := .URL }}
-        {{ $linkUrlPrefix := "" }}
-        {{ if not (hasPrefix $linkUrl "http") }}
-          {{ $linkUrlPrefix := $.Site.BaseURL }}
-        {{ end }}
         <li {{ if $currentNode.IsMenuCurrent "main" . }}class="site-nav-current"{{ end }}>
-          <a href="{{ $linkUrlPrefix }}{{ $linkUrl }}">{{ .Name }}</a>
+          <a href="{{ if not (hasPrefix .URL "http") }}{{ .URL | absURL }}{{ else }}{{ .URL }}{{ end }}">{{ .Name }}</a>
         </li>
       {{ end }}
     </ul>

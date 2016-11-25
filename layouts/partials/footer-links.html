@@ -1,0 +1,9 @@
+{{ if .Site.Menus.footer }}
+  <ul class="x-separated-list">
+    {{ range .Site.Menus.footer }}
+      <li>
+        <a href="{{ if not (hasPrefix .URL "http") }}{{ .URL | absURL }}{{ else }}{{ .URL }}{{ end }}">{{ .Name }}</a>
+      </li>
+    {{ end }}
+  </ul>
+{{ end }}

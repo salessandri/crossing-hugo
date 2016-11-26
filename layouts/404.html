@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Lang }}">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <title>404 Page Not Found - {{ htmlEscape .Site.Title }}</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,400italic,700&amp;subset=latin,latin-ext" />
+  <link rel="stylesheet" href="{{ "css/crossing-style.css" | absURL }}">
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container">
+      {{ partial "site-nav.html" . }}
+
+      <h1 class="site-title">
+        <a href="{{ .Site.BaseURL }}">{{ htmlEscape .Site.Title }}</a>
+      </h1>
+
+      {{ if .Site.Params.tagline }}
+        <div class="site-tagline">
+          {{ .Site.Params.tagline }}
+        </div>
+      {{ end }}
+    </div>
+  </header>
+
+  <main class="container">
+    <h1 class="post-title">404 - Page Not Found</h1>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      {{ partial "footer-links.html" . }}
+      © {{ .Now.Format "2006" }} - {{ htmlEscape .Site.Title }}
+    </div>
+  </footer>
+
+  <script src="//code.jquery.com/jquery-2.2.0.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js"></script>
+  <script>
+    (function ($) {
+      var $siteNav = $('.site-nav');
+      var $siteNavToggle = $('.site-nav-toggle');
+
+      $siteNavToggle.click(function () {
+        $siteNav.toggleClass('is-toggled');
+      });
+
+      $('.post-content').fitVids();
+    }(jQuery));
+  </script>
+
+</body>
+</html>

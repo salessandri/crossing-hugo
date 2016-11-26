@@ -13,31 +13,24 @@
   <meta property="og:title" content="{{ .Title }}" />
   <meta property="og:site_name" content="{{ .Site.Title }}" />
 
-  {{ $ogType:="website" }}
+  {{ $.Scratch.Set "ogType" "website" }}
   {{ if .IsPage }}
     {{ if eq .Type "post" }}
-        {{ $ogType:="article" }}
+        {{ $.Scratch.Set "ogType" "article" }}
     {{ end }}
   {{ end }}
 
-  <meta property="og:type" content="{{ $ogType }}" />
+  <meta property="og:type" content="{{ $.Scratch.Get "ogType" }}" />
 
-  {{ $ogImagePrefix := "" }}
-  {{ $ogImage := "" }}
   {{ if $.Params.image }}
-    {{ $ogImagePrefix := "" }}
-    {{ $ogImage := $.Params.image }}
-    {{ if not (hasPrefix $.Params.image "http") }}
-      {{ $ogImagePrefix := .Site.BaseURL }}
-    {{ end }}
-    <meta property="og:image" content="{{ $ogImagePrefix }}{{ $ogImage }}" />
+    <meta property="og:image" content="{{ if not (hasPrefix $.Params.image "http") }}{{ $.Params.image | absURL }}{{ else }}{{ $.Params.image }}{{ end }}" />
   {{ end }}
 
   <meta property="og:url" content="{{ .Permalink }}" />
 
-  {{ if eq $ogType "article" }}
+  {{ if eq ($.Scratch.Get "ogType") "article" }}
 
-    <meta property="article:published_time" content="{{ .PublishDate }}" />
+    <meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05-07:00" }}" />
 
     {{ if isset .Site.Params.authors .Params.author }}
       <meta property="article:author" content="{{ index (index .Site.Params.authors .Params.author) "website" }}">
@@ -52,7 +45,7 @@
   {{ if isset .Site.Params.social "twitter"}}
     <meta name="twitter:site" content="@{{ .Site.Params.social.twitter }}" />
   {{ end }}
-  <meta name="twitter:card" content="summary{{ if $ogImage }}_large_image{{ end }}" />
+  <meta name="twitter:card" content="summary{{ if $.Params.image }}_large_image{{ end }}" />
 
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,400italic,700&amp;subset=latin,latin-ext" />
   <link rel="stylesheet" href="{{ "css/crossing-style.css" | absURL }}">

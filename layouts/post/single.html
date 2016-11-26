@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Lang }}">
+
+{{ partial "header.html" . }}
+
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      {{ partial "site-nav.html" . }}
+
+      <h1 class="site-title">
+        <a href="{{ .Site.BaseURL }}">{{ htmlEscape .Site.Title }}</a>
+      </h1>
+
+      {{ if .Site.Params.tagline }}
+        <div class="site-tagline">
+          {{ .Site.Params.tagline }}
+        </div>
+      {{ end }}
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Content -->
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+    <header class="post-header">
+      {{ if isset .Params "image" }}
+        <div class="cover-image">
+          <img src="{{ if not (hasPrefix .Params.image "http") }}{{ .Params.image | absURL }}{{ else }}{{ .Params.image }}{{ end }}" alt="" itemprop="image" />
+        </div>
+      {{ end }}
+      <h1 class="post-title" itemprop="headline">{{ .Title | htmlEscape }}</h1>
+      <ul class="x-separated-list x-separated-list-meta">
+        {{ if .Params.author }}
+          {{ $author := index $.Site.Params.authors .Params.author }}
+          <li class="post-byline">
+            {{ if isset $author "website" }}
+              <a href="{{ $author.website }}">{{ $author.name }}</a>
+            {{ else }}
+              {{ $author.name }}
+            {{ end }}
+          </li>
+        {{ end }}
+        <li class="post-date">
+          <time datetime="{{ .Date.Format "2006-01-02T15:04:05-07:00" }}" itemprop="datePublished">
+            {{ .Date.Format "January 2, 2006" }}
+          </time>
+        </li>
+      </ul>
+    </header>
+
+    <div class="post-content" itemprop="articleBody">
+      {{ .Content }}
+    </div>
+
+    <div class="share">
+      <span class="share-title">Share this on:</span>
+      <ul class="x-separated-list">
+        <li>
+          <a href="https://twitter.com/intent/tweet?text={{ .Title | urlize }}&amp;url={{ .Permalink }}"
+              onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">Twitter</a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/sharer/sharer.php?u={{ .Permalink }}"
+              onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">Facebook</a>
+        </li>
+        <li>
+          <a href="https://plus.google.com/share?url={{ .Permalink }}"
+              onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">Google+</a>
+        </li>
+      </ul>
+    </div>
+
+  </article>
+
+  {{ if .Params.author }}
+    {{ $author := index $.Site.Params.authors .Params.author }}
+    {{ if isset $author "bio" }}
+      <div class="post-author {{ if isset $author "avatar" }}has-avatar{{ end }}">
+        {{ if isset $author "avatar" }}
+          {{ if isset $author "website" }}
+            <a href="{{ $author.website }}" class="post-author-avatar" aria-hidden="true" style="background-image: url({{ if not (hasPrefix  $author.avatar "http") }}{{ $author.avatar | absURL }}{{ else }}{{ $author.avatar }}{{ end }})"></a>
+          {{ else }}
+            <div class="post-author-avatar" style="background-image: url({{ if not (hasPrefix  $author.avatar "http") }}{{ $author.avatar | absURL }}{{ else }}{{ $author.avatar }}{{ end }})"></div>
+          {{ end }}
+        {{ end }}
+        <div class="post-author-name">
+          {{ if isset $author "website" }}
+            <a href="{{ $author.website }}">{{ $author.name }}</a>
+          {{ else }}
+            {{ $author.name }}
+          {{ end }}
+        </div>
+        <p class="post-author-bio">{{ $author.bio }}</p>
+      </div>
+    {{ end }}
+  {{ end }}
+
+  {{/*
+  {{ partial "disqus.html" }}
+  */}}
+
+  <nav class="read-next">
+    {{ if .NextInSection }}
+      <a class="read-next-newer" href="{{ .NextInSection.Permalink }}">
+        <span class="read-next-label">Newer Post</span>
+        <span class="read-next-title">{{ .NextInSection.Title | htmlEscape }}</span>
+      </a>
+    {{ end }}
+    {{ if .PrevInSection }}
+      <a class="read-next-older" href="{{ .PrevInSection.Permalink }}">
+        <span class="read-next-label">Older Post</span>
+        <span class="read-next-title">{{ .PrevInSection.Title | htmlEscape }}</span>
+      </a>
+    {{ end }}
+  </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      {{ partial "footer-links.html" . }}
+      © {{ .Now.Format "2006" }} - {{ htmlEscape .Site.Title }}
+    </div>
+  </footer>
+
+  <script src="//code.jquery.com/jquery-2.2.0.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js"></script>
+  <script>
+    (function ($) {
+      var $siteNav = $('.site-nav');
+      var $siteNavToggle = $('.site-nav-toggle');
+
+      $siteNavToggle.click(function () {
+        $siteNav.toggleClass('is-toggled');
+      });
+
+      $('.post-content').fitVids();
+    }(jQuery));
+  </script>
+
+</body>
+</html>

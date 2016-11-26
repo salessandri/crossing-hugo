@@ -97,9 +97,7 @@
     {{ end }}
   {{ end }}
 
-  {{/*
-  {{ partial "disqus.html" }}
-  */}}
+  {{ partial "disqus.html" . }}
 
   <nav class="read-next">
     {{ if .NextInSection }}

@@ -27,7 +27,7 @@
 
 
     <div class="post-list">
-    {{ range .Paginator.Pages }}
+    {{ range (.Paginate (where .Data.Pages "Type" "post") 5).Pages }}
       <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
         <header class="post-header">
           <h2 class="post-title" itemprop="headline"><a href="{{ .Permalink }}">{{ .Title | htmlEscape }}</a></h2>

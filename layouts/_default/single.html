@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Lang }}">
+
+{{ partial "header.html" . }}
+
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      {{ partial "site-nav.html" . }}
+
+      <h1 class="site-title">
+        <a href="{{ .Site.BaseURL }}">{{ htmlEscape .Site.Title }}</a>
+      </h1>
+
+      {{ if .Site.Params.tagline }}
+        <div class="site-tagline">
+          {{ .Site.Params.tagline }}
+        </div>
+      {{ end }}
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Content -->
+    {{ .Content }}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      {{ partial "footer-links.html" . }}
+      © {{ .Now.Format "2006" }} - {{ htmlEscape .Site.Title }}
+    </div>
+  </footer>
+
+  <script src="//code.jquery.com/jquery-2.2.0.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js"></script>
+  <script>
+    (function ($) {
+      var $siteNav = $('.site-nav');
+      var $siteNavToggle = $('.site-nav-toggle');
+
+      $siteNavToggle.click(function () {
+        $siteNav.toggleClass('is-toggled');
+      });
+
+      $('.post-content').fitVids();
+    }(jQuery));
+  </script>
+
+</body>
+</html>

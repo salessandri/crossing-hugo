@@ -2,7 +2,7 @@
   <ul class="x-separated-list">
     {{ range .Site.Menus.footer }}
       <li>
-        <a href="{{ if not (hasPrefix .URL "http") }}{{ .URL | absURL }}{{ else }}{{ .URL }}{{ end }}">{{ .Name }}</a>
+        <a href="{{ if not (hasPrefix .URL "http") }}{{ .URL | absURL }}{{ else }}{{ .URL }}{{ end }}" target="_blank">{{ .Name }}</a>
       </li>
     {{ end }}
   </ul>

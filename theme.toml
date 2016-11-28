@@ -4,15 +4,15 @@
 name = "Crossing Hugo"
 license = "MIT"
 licenselink = "https://github.com/salessandri/crossing-hugo/blob/master/LICENSE.md"
-description = ""
+description = "Adaptation from the crossing-jekyll theme for hugo"
 homepage = "https://github.com/salessandri/crossing-hugo"
-tags = ["", ""]
-features = ["", ""]
+tags = ["blog"]
+features = ["blog"]
 min_version = 0.17
 
 [author]
   name = "Santiago Alessandri"
-  homepage = ""
+  homepage = "https://www.linkedin.com/in/santiagoalessandri"
 
 # If porting an existing theme
 [original]

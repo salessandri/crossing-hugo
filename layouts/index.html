@@ -23,8 +23,9 @@
 
   <main class="container">
     <!-- Content -->
-    <div class="cover-image"><img src="{{ .Site.Params.image }}" alt="" /></div>
-
+    {{ if isset .Site.Params "image" }}
+        <div class="cover-image"><img src="{{ .Site.Params.image }}" alt="" /></div>
+    {{ end }}
 
     <div class="post-list">
     {{ range (.Paginate (where .Data.Pages "Type" "post") 5).Pages }}
